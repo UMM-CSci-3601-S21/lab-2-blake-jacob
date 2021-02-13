@@ -28,6 +28,8 @@ public class TodoController {
    *
    * @param ctx a Javalin HTTP context
    */
+
+   /*
   public void getTodo(Context ctx) {
     String id = ctx.pathParam("id", String.class).get();
     Todo todo = database.getTodo(id);
@@ -38,15 +40,19 @@ public class TodoController {
       throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
+  */
 
   /**
    * Get a JSON response with a list of all the todos in the "database".
    *
    * @param ctx a Javalin HTTP context
    */
+
+   /*
   public void getTodos(Context ctx) {
     Todo[] todos = database.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
+  */
 
 }
