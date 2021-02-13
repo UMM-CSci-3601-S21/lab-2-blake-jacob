@@ -32,7 +32,7 @@ public class Server {
 
     // Redirects to create simpler URLs
     server.get("/users", ctx -> ctx.redirect("/users.html"));
-    server.get("/todos", ctx -> ctx.redirect("/todos.html"));
+    //server.get("/todos", ctx -> ctx.redirect("/todos.html"));
 
     // API endpoints
 
@@ -76,7 +76,9 @@ public class Server {
    * reading from the JSON "database" file. If that happens we'll print out an
    * error message exit the program.
    */
-  private static TodoController buildTodoController() {
+
+   /*
+   private static TodoController buildTodoController() {
     TodoController todoController = null;
 
     try {
@@ -92,5 +94,6 @@ public class Server {
 
     return todoController;
   }
+  */
 
 }
