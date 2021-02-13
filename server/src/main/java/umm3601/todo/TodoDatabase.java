@@ -25,7 +25,7 @@ public class Database {
   public Database(String todoDataFile) throws IOException {
     Gson gson = new Gson();
     InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(userDataFile));
-    allUsers = gson.fromJson(reader, Todo[].class);
+    allTodos = gson.fromJson(reader, Todo[].class);
   }
 
   public int size() {
