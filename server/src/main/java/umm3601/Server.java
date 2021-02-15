@@ -36,12 +36,19 @@ public class Server {
 
     // Redirects to create simpler URLs
     server.get("/users", ctx -> ctx.redirect("/users.html"));
-    //server.get("/todos", ctx -> ctx.redirect("/todos.html"));
+    server.get("/todos", ctx -> ctx.redirect("/todos.html"));
+
 
     // API endpoints
 
+    // Get a specific todo
+    server.get("/api/todos/:id", ctx -> todoController.getTodo(ctx));
+
     // Get specific user
     server.get("/api/users/:id", ctx -> userController.getUser(ctx));
+
+    // List todos, filtered using query parameters
+    server.get("/api/todos", ctx -> todoController.getTodos(ctx));
 
     // List users, filtered using query parameters
     server.get("/api/users", ctx -> userController.getUsers(ctx));
