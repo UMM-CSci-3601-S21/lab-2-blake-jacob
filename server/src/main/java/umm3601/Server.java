@@ -22,6 +22,7 @@ public class Server {
 
     // Initialize dependencies
     UserController userController = buildUserController();
+    TodoController todoController = buildTodoController();
 
     Javalin server = Javalin.create(config -> {
       // This tells the server where to look for static files,
@@ -79,8 +80,6 @@ public class Server {
    * reading from the JSON "database" file. If that happens we'll print out an
    * error message exit the program.
    */
-
-   
    private static TodoController buildTodoController() {
     TodoController todoController = null;
 
