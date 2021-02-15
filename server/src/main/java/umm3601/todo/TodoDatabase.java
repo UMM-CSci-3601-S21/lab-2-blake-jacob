@@ -73,6 +73,13 @@ public class TodoDatabase {
       String targetCategory = queryParams.get("category").get(0);
       filteredTodos = filterTodosByCategory(filteredTodos, targetCategory);
     }
+
+    // Filter Owner if defined
+    if (queryParams.containsKey("owner")) {
+      String targetOwner = queryParams.get("owner").get(0);
+      filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
+    }
+
     // Process other query parameters here...
 
     return filteredTodos;
@@ -94,18 +101,32 @@ public class TodoDatabase {
   }
   */
 
+
   /**
-   * Get an array of all the users having the target company.
+   * Get an array of all the todos having the target company.
    *
-   * @param todos         the list of users to filter by company
+   * @param todos         the list of todos to filter by company
    * @param targetCompany the target company to look for
    * @return an array of all the users from the given list that have the target
    *         company
    */
-  
+
   public Todo[] filterTodosByCategory(Todo[] todos, String targetCategory) {
     return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
   }
+
+  /**
+   * Get an array of all the todos having the target owner.
+   *
+   * @param todos         the list of todos to filter by owner
+   * @param targetOwner the target owner to look for
+   * @return an array of all the todos from the given list that have the target
+   *         owner
+   */
+
+   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
+     return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
+   }
 
 
 }
