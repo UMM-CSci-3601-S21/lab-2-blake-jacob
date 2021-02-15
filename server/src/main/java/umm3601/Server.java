@@ -11,7 +11,9 @@ public class Server {
 
   public static final String CLIENT_DIRECTORY = "../client";
   public static final String USER_DATA_FILE = "/users.json";
+  public static final String TODO_DATA_FILE = "/todos.json";
   private static Database userDatabase;
+  private static Database todoDatabase;
 
   public static void main(String[] args) {
 
@@ -30,7 +32,7 @@ public class Server {
 
     // Redirects to create simpler URLs
     server.get("/users", ctx -> ctx.redirect("/users.html"));
-    server.get("/todos", ctx -> ctx.redirect("/todos.html"));
+    //server.get("/todos", ctx -> ctx.redirect("/todos.html"));
 
     // API endpoints
 
@@ -65,4 +67,33 @@ public class Server {
 
     return userController;
   }
+
+  /***
+   * Create a database using the json file, use it as data source for a new
+   * TodoController
+   *
+   * Constructing the controller might throw an IOException if there are problems
+   * reading from the JSON "database" file. If that happens we'll print out an
+   * error message exit the program.
+   */
+
+   /*
+   private static TodoController buildTodoController() {
+    TodoController todoController = null;
+
+    try {
+      todoDatabase = new Database(TODO_DATA_FILE);
+      todoController = new TodoController(todoDatabase);
+    } catch (IOException e) {
+      System.err.println("The server failed to load the user data; shutting down.");
+      e.printStackTrace(System.err);
+
+      // Exit from the Java program
+      System.exit(1);
+    }
+
+    return todoController;
+  }
+  */
+
 }
