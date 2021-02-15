@@ -69,7 +69,7 @@ public class TodoDatabase {
     */
 
     // Filter company if defined
-    if (queryParams.containsKey("company")) {
+    if (queryParams.containsKey("category")) {
       String targetCategory = queryParams.get("category").get(0);
       filteredTodos = filterTodosByCategory(filteredTodos, targetCategory);
     }
@@ -88,7 +88,7 @@ public class TodoDatabase {
    *         age
    */
 
-   /*
+/*
   public Todo[] filterTodosByAge(Todo[] todos, int targetAge) {
     return Arrays.stream(todos).filter(x -> x.age == targetAge).toArray(Todo[]::new);
   }
@@ -102,7 +102,7 @@ public class TodoDatabase {
    * @return an array of all the users from the given list that have the target
    *         company
    */
-
+  
   public Todo[] filterTodosByCategory(Todo[] todos, String targetCategory) {
     return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
   }
