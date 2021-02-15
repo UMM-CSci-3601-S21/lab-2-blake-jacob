@@ -23,6 +23,7 @@ public class TodoController {
     this.database = database;
   }
 
+
   /**
    * Get the single todo specified by the `id` parameter in the request.
    *
@@ -51,6 +52,6 @@ public class TodoController {
     Todo[] todos = database.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
-  
+
 
 }
