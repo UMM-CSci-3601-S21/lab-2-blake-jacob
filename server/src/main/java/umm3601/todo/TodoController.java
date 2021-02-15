@@ -13,7 +13,7 @@ public class TodoController {
   /**
    * Construct a controller for todos.
    * <p>
-   * This loads the "database" of todo info from a JSON file and stores that
+   * This loads the "TodoDatabase" of todo info from a JSON file and stores that
    * internally so that (subsets of) todos can be returned in response to
    * requests.
    *
@@ -22,7 +22,6 @@ public class TodoController {
   public TodoController(TodoDatabase database) {
     this.database = database;
   }
-
 
   /**
    * Get the single todo specified by the `id` parameter in the request.
@@ -41,9 +40,8 @@ public class TodoController {
     }
   }
 
-
   /**
-   * Get a JSON response with a list of all the todos in the "database".
+   * Get a JSON response with a list of all the todos in the "TodoDatabase".
    *
    * @param ctx a Javalin HTTP context
    */
