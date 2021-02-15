@@ -19,6 +19,7 @@ public class TodoController {
    *
    * @param database the `Database` containing user data
    */
+   
   public TodoController(TodoDatabase database) {
     this.database = database;
   }
@@ -39,6 +40,7 @@ public class TodoController {
       throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
+  
 
 
   /**
@@ -46,10 +48,11 @@ public class TodoController {
    *
    * @param ctx a Javalin HTTP context
    */
-
+   
   public void getTodos(Context ctx) {
     Todo[] todos = database.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
+  
 
 }
