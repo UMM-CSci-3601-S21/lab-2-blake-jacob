@@ -1,4 +1,4 @@
-package umm3601.user;
+package umm3601.todo;
 
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
@@ -8,7 +8,7 @@ import io.javalin.http.NotFoundResponse;
  */
 public class TodoController {
 
-  private Database database;
+  private TodoDatabase database;
 
   /**
    * Construct a controller for todos.
@@ -19,7 +19,7 @@ public class TodoController {
    *
    * @param database the `Database` containing user data
    */
-  public TodoController(Database database) {
+  public TodoController(TodoDatabase database) {
     this.database = database;
   }
 
@@ -29,7 +29,6 @@ public class TodoController {
    * @param ctx a Javalin HTTP context
    */
 
-   /*
   public void getTodo(Context ctx) {
     String id = ctx.pathParam("id", String.class).get();
     Todo todo = database.getTodo(id);
@@ -40,7 +39,7 @@ public class TodoController {
       throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
-  */
+
 
   /**
    * Get a JSON response with a list of all the todos in the "database".
@@ -48,11 +47,10 @@ public class TodoController {
    * @param ctx a Javalin HTTP context
    */
 
-   /*
   public void getTodos(Context ctx) {
     Todo[] todos = database.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
-  */
+  
 
 }

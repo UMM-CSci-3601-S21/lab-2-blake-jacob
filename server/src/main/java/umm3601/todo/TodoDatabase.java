@@ -1,4 +1,4 @@
-package umm3601.user;
+package umm3601.todo;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,10 +11,10 @@ import com.google.gson.Gson;
 import io.javalin.http.BadRequestResponse;
 
 /**
- * A fake "database" of user info
+ * A fake "database" of todo info
  * <p>
  * Since we don't want to complicate this lab with a real database, we're going
- * to instead just read a bunch of user data from a specified JSON file, and
+ * to instead just read a bunch of todo data from a specified JSON file, and
  * then provide various database-like methods that allow the `TodoController` to
  * "query" the "database".
  */
@@ -37,14 +37,13 @@ public class TodoDatabase {
    * todo with that ID.
    *
    * @param id the ID of the desired todo
-   * @return the todo with the given ID, or null if there is no user with that ID
+   * @return the todo with the given ID, or null if there is no todo with that ID
    */
 
-   /*
-  public User getTodo(String id) {
+  public Todo getTodo(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
-  */
+
 
   /**
    * Get an array of all the todos satisfying the queries in the params.
@@ -53,11 +52,11 @@ public class TodoDatabase {
    * @return an array of all the todos matching the given criteria
    */
 
-   /*
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
     Todo[] filteredTodos = allTodos;
 
     // Filter age if defined
+    /*
     if (queryParams.containsKey("age")) {
       String ageParam = queryParams.get("age").get(0);
       try {
@@ -67,16 +66,18 @@ public class TodoDatabase {
         throw new BadRequestResponse("Specified age '" + ageParam + "' can't be parsed to an integer");
       }
     }
+    */
+
     // Filter company if defined
-    if (queryParams.containsKey("company")) {
-      String targetCompany = queryParams.get("company").get(0);
-      filteredTodos = filterTodosByCompany(filteredTodos, targetCompany);
+    if (queryParams.containsKey("category")) {
+      String targetCategory = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, targetCategory);
     }
     // Process other query parameters here...
 
     return filteredTodos;
   }
-  */
+
 
   /**
    * Get an array of all the users having the target age.
@@ -87,11 +88,11 @@ public class TodoDatabase {
    *         age
    */
 
-   /*
+/*
   public Todo[] filterTodosByAge(Todo[] todos, int targetAge) {
     return Arrays.stream(todos).filter(x -> x.age == targetAge).toArray(Todo[]::new);
   }
-  /*
+  */
 
   /**
    * Get an array of all the users having the target company.
@@ -101,11 +102,10 @@ public class TodoDatabase {
    * @return an array of all the users from the given list that have the target
    *         company
    */
-
-   /*
-  public Todo[] filterTodosByCompany(Todo[] todos, String targetCompany) {
-    return Arrays.stream(todos).filter(x -> x.company.equals(targetCompany)).toArray(Todo[]::new);
+  
+  public Todo[] filterTodosByCategory(Todo[] todos, String targetCategory) {
+    return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
   }
-  */
+
 
 }
