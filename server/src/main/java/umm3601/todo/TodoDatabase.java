@@ -66,10 +66,14 @@ public class TodoDatabase {
     }
 
     // Filter status if defined
-    // ! This is broken
     if (queryParams.containsKey("status")) {
       String statusParam = queryParams.get("status").get(0);
-      Boolean targetStatus = Boolean.parseBoolean(statusParam);
+      Boolean targetStatus;
+      if (statusParam.equals("complete")) {
+        targetStatus = true;
+      } else {
+        targetStatus = false;
+      }
       filteredTodos = filterTodosByStatus(filteredTodos, targetStatus);
     }
 
