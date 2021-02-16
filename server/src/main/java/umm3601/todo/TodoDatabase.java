@@ -53,16 +53,16 @@ public class TodoDatabase {
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
     Todo[] filteredTodos = allTodos;
 
-    // Filter category if defined
-    if (queryParams.containsKey("category")) {
-      String targetCategory = queryParams.get("category").get(0);
-      filteredTodos = filterTodosByCategory(filteredTodos, targetCategory);
-    }
-
     // Filter owner if defined
     if (queryParams.containsKey("owner")) {
       String targetOwner = queryParams.get("owner").get(0);
       filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
+    }
+
+    // Filter category if defined
+    if (queryParams.containsKey("category")) {
+      String targetCategory = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, targetCategory);
     }
 
     // Filter status if defined
@@ -77,6 +77,17 @@ public class TodoDatabase {
       filteredTodos = filterTodosByStatus(filteredTodos, targetStatus);
     }
 
+    // Filter by contains
+    if (queryParams.containsKey("contains")) {
+      String targetWord = queryParams.get("contains").get(0);
+      filteredTodos = filterTodosByContains(filteredTodos, targetWord);
+    }
+
+    // Order attribute alphabetically
+    if (queryParams.containsKey("orderBy")) {
+      String orderByParam = queryParams.get("orderBy").get(0);
+    }
+
     // Filter by limit
     if (queryParams.containsKey("limit")) {
       String limitParam = queryParams.get("limit").get(0);
@@ -86,12 +97,6 @@ public class TodoDatabase {
       } catch (NumberFormatException e) {
         throw new BadRequestResponse("Specified limit '" + limitParam + "' can't be parsed to an integer");
       }
-    }
-
-    // Filter by contains
-    if (queryParams.containsKey("contains")) {
-      String targetWord = queryParams.get("contains").get(0);
-      filteredTodos = filterTodosByContains(filteredTodos, targetWord);
     }
 
     return filteredTodos;
