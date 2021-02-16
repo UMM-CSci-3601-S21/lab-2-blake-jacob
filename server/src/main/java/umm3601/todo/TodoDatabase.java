@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import com.google.gson.Gson;
 
 import io.javalin.http.BadRequestResponse;
@@ -32,7 +31,7 @@ public class TodoDatabase {
     return allTodos.length;
   }
 
-/**
+  /**
    * Get the single todo specified by the given ID. Return `null` if there is no
    * todo with that ID.
    *
@@ -45,16 +44,6 @@ public class TodoDatabase {
   }
 
   /**
-   * Lists all the todos except with a limit pertaining to the given parameter
-   *
-   * @param limit An integer that limits the amount of todos shown
-   * @return      A copy of the array of todos limited to the given parameter
-   */
-  public Todo[] listLimitedTodos(Integer limit) {
-    return Arrays.copyOf(allTodos, limit);
-  }
-
-  /**
    * Get an array of all the todos satisfying the queries in the params.
    *
    * @param queryParams map of key-value pairs for the query
@@ -64,35 +53,47 @@ public class TodoDatabase {
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
     Todo[] filteredTodos = allTodos;
 
-    // Filter company if defined
+    // Filter category if defined
     if (queryParams.containsKey("category")) {
       String targetCategory = queryParams.get("category").get(0);
       filteredTodos = filterTodosByCategory(filteredTodos, targetCategory);
     }
 
-    // Filter Owner if defined
+    // Filter owner if defined
     if (queryParams.containsKey("owner")) {
       String targetOwner = queryParams.get("owner").get(0);
       filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
     }
 
-    // Filter Status if defined
+    // Filter status if defined
+    // ! This is broken
     if (queryParams.containsKey("status")) {
       String statusParam = queryParams.get("status").get(0);
       Boolean targetStatus = Boolean.parseBoolean(statusParam);
       filteredTodos = filterTodosByStatus(filteredTodos, targetStatus);
     }
 
+    // Filter by limit
+    if (queryParams.containsKey("limit")) {
+      String limitParam = queryParams.get("limit").get(0);
+      try {
+        int targetLimit = Integer.parseInt(limitParam);
+        filteredTodos = filterTodosByLimit(filteredTodos, targetLimit);
+      } catch (NumberFormatException e) {
+        throw new BadRequestResponse("Specified limit '" + limitParam + "' can't be parsed to an integer");
+      }
+    }
+
     return filteredTodos;
   }
 
   /**
-   * Get an array of all the todos having the target company.
+   * Get an array of all the todos having the target category.
    *
-   * @param todos         the list of todos to filter by company
-   * @param targetCompany the target company to look for
-   * @return an array of all the users from the given list that have the target
-   *         company
+   * @param todos          the list of todos to filter by category
+   * @param targetCategory the target category to look for
+   * @return an array of all the Todos from the given list that have the target
+   *         category
    */
 
   public Todo[] filterTodosByCategory(Todo[] todos, String targetCategory) {
@@ -102,28 +103,36 @@ public class TodoDatabase {
   /**
    * Get an array of all the todos having the target owner.
    *
-   * @param todos         the list of todos to filter by owner
+   * @param todos       the list of todos to filter by owner
    * @param targetOwner the target owner to look for
    * @return an array of all the todos from the given list that have the target
    *         owner
    */
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
-     return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
-   }
+    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
+  }
 
-   /**
+  /**
    * Get an array of all the todos having the target status.
    *
-   * @param todos         the list of todos to filter by status
+   * @param todos        the list of todos to filter by status
    * @param targetStatus the target status to look for
    * @return an array of all the todos from the given list that have the target
    *         status
    */
 
   public Todo[] filterTodosByStatus(Todo[] todos, Boolean targetStatus) {
-     return Arrays.stream(todos).filter(x -> x.status.equals(targetStatus)).toArray(Todo[]::new);
-   }
+    return Arrays.stream(todos).filter(x -> x.status.equals(targetStatus)).toArray(Todo[]::new);
+  }
 
-
+  /**
+   * Lists all the todos except with a limit pertaining to the given parameter
+   *
+   * @param limit An integer that limits the amount of todos shown
+   * @return A copy of the array of todos limited to the given parameter
+   */
+  public Todo[] filterTodosByLimit(Todo[] todos, int targetLimit) {
+    return Arrays.copyOf(todos, targetLimit);
+  }
 }

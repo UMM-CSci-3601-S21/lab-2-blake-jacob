@@ -9,7 +9,6 @@ import umm3601.user.UserController;
 import umm3601.todo.TodoDatabase;
 import umm3601.todo.TodoController;
 
-
 public class Server {
 
   public static final String CLIENT_DIRECTORY = "../client";
@@ -38,20 +37,20 @@ public class Server {
     server.get("/users", ctx -> ctx.redirect("/users.html"));
     server.get("/todos", ctx -> ctx.redirect("/todos.html"));
 
-
     // API endpoints
-
-    // Get a specific todo
-    server.get("/api/todos/:id", ctx -> todoController.getTodo(ctx));
 
     // Get specific user
     server.get("/api/users/:id", ctx -> userController.getUser(ctx));
 
+    // List users, filtered using query parameters
+    server.get("/api/users", ctx -> userController.getUsers(ctx));
+
+    // Get a specific todo
+    server.get("/api/todos/:id", ctx -> todoController.getTodo(ctx));
+
     // List todos, filtered using query parameters
     server.get("/api/todos", ctx -> todoController.getTodos(ctx));
 
-    // List users, filtered using query parameters
-    server.get("/api/users", ctx -> userController.getUsers(ctx));
   }
 
   /***
@@ -87,7 +86,7 @@ public class Server {
    * reading from the JSON "database" file. If that happens we'll print out an
    * error message exit the program.
    */
-   private static TodoController buildTodoController() {
+  private static TodoController buildTodoController() {
     TodoController todoController = null;
 
     try {
@@ -103,6 +102,5 @@ public class Server {
 
     return todoController;
   }
-
 
 }
