@@ -88,6 +88,12 @@ public class TodoDatabase {
       }
     }
 
+    // Filter by contains
+    if (queryParams.containsKey("contains")) {
+      String targetWord = queryParams.get("contains").get(0);
+      filteredTodos = filterTodosByContains(filteredTodos, targetWord);
+    }
+
     return filteredTodos;
   }
 
@@ -139,4 +145,9 @@ public class TodoDatabase {
   public Todo[] filterTodosByLimit(Todo[] todos, int targetLimit) {
     return Arrays.copyOf(todos, targetLimit);
   }
+
+  public Todo[] filterTodosByContains(Todo[] todos, String targetWord) {
+    return Arrays.stream(todos).filter(x -> x.body.contains(targetWord)).toArray(Todo[]::new);
+  }
+
 }
